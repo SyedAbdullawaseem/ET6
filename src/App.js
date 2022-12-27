@@ -74,6 +74,17 @@ function App() {
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [enteredValue, setEnteredValue]=useState('')
+
+  const NewMovieObj=event=>{
+    setEnteredValue(event.target.value)
+    
+  }
+
+  const formSubmissisnHandler=event=>{
+    event.preventDefault()
+    console.log(enteredValue)
+  }
 
   const fetchMoviesHandler = useCallback(async () => {
     setIsLoading(true);
@@ -118,10 +129,21 @@ function App() {
   if (isLoading) {
     content = <p>Loading...</p>;
   }
+ 
+
 
   return (
     <React.Fragment>
       <section>
+        <form onSubmit={formSubmissisnHandler}>
+          <label htmlFor='Title'>Title</label><br></br><br></br>
+          <input type='text' onChange={NewMovieObj}></input><br></br><br></br>
+          <label htmlFor='Opening Text'>Opening Text</label><br></br><br></br>
+          <input type='text'></input><br></br><br></br>
+          <label htmlFor='Release date'>Release date</label><br></br><br></br>
+          <input type='date'></input><br></br><br></br>
+          <button>Add movies</button>
+        </form>
         <button onClick={fetchMoviesHandler}>Fetch Movies</button>
       </section>
       <section>{content} {!isLoading && error && <p> <button>Stop Retrying</button></p>}</section>
